@@ -2,6 +2,7 @@ import connexion
 import six
 
 from swagger_server.models.student import Student  # noqa: E501
+from swagger_server.service.student_service import *
 from swagger_server import util
 
 
@@ -17,7 +18,8 @@ def add_student(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Student.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        return add(body)
+    return 500,'Error'
 
 
 def delete_student_by_id(student_id):  # noqa: E501
@@ -30,6 +32,9 @@ def delete_student_by_id(student_id):  # noqa: E501
 
     :rtype: None
     """
+    if connexion.request.is_json:
+        body = Student.from_dict(connexion.request.get_json())  # noqa: E501
+        return delete(body)
     return 'do some magic!'
 
 
@@ -43,4 +48,7 @@ def get_student_by_id(student_id):  # noqa: E501
 
     :rtype: Student
     """
+    if connexion.request.is_json:
+        body = Student.from_dict(connexion.request.get_json())  # noqa: E501
+        return get_by_id(body)
     return 'do some magic!'
